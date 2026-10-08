@@ -6,7 +6,7 @@ body {
   margin: 0;
   background: #faf8f3;
   color: #33312b;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-poppins), sans-serif;
 }
 
 .page {
@@ -314,4 +314,51 @@ button:hover {
   to {
     stroke-dashoffset: 0;
   }
+}
+
+.field input[type="tel"] {
+  border: 0;
+  border-radius: 0;
+  padding: 12px 10px;
+  padding-right: 0;
+}
+
+.field input[type="tel"]:focus {
+  box-shadow: none;
+}
+
+.character-count {
+  margin: 6px 0 0;
+  text-align: right;
+  color: #967c44;
+  font-size: 12px;
+}
+
+.PhoneInput {
+  width: 100%;
+  padding: 0 14px;
+  border: 1px solid #d8d0c0;
+  border-radius: 10px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+}
+
+.PhoneInput:focus-within {
+  border-color: #c09537;
+  box-shadow: 0 0 0 3px rgba(192, 149, 55, 0.12);
+}
+
+.PhoneInputCountry {
+  margin-right: 8px;
+}
+
+.PhoneInputInput {
+  width: 100%;
+  padding: 14px 0;
+  border: 0;
+  outline: none;
+  font-family: inherit;
+  font-size: 16px;
+  background: transparent;
 }

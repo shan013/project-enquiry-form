@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 
 export default function Home() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -39,16 +41,22 @@ export default function Home() {
       return "Please enter your phone number.";
     }
 
-    if (!/^\d+$/.test(phone)) {
-      return "Phone number can only contain numbers.";
+    if (!isValidPhoneNumber(phone)) {
+      return "Please enter a valid phone number.";
     }
 
     return "";
   };
 
   const validateStep3 = () => {
-    if (!description.trim()) {
-      return "Please tell us about your project.";
+    const characterCount = description.trim().length;
+
+    if (characterCount === 0) {
+      return "Please describe your project.";
+    }
+
+    if (characterCount < 140) {
+      return "Please provide at least 140 characters describing your project.";
     }
 
     return "";
@@ -166,7 +174,7 @@ export default function Home() {
                   <label>Full Name</label>
                   <input
                     type="text"
-                    placeholder="John Smith"
+                    placeholder="Sachin Bansal"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     onBlur={() => setNameTouched(true)}
@@ -190,7 +198,7 @@ export default function Home() {
                   <label>Email Address</label>
                   <input
                     type="email"
-                    placeholder="john@example.com"
+                    placeholder="example@mail.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     onBlur={() => setEmailTouched(true)}
@@ -213,12 +221,17 @@ export default function Home() {
                 <div className="field">
                   <label>Phone Number</label>
 
-                  <input
-                    type="tel"
-                    placeholder="+1 123 456 7890"
+                  <PhoneInput
+                    international
+                    defaultCountry="IN"
+                    countryCallingCodeEditable={false}
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    onChange={(value) => {
+                      setPhone(value || "");
+                      setFormError("");
+                    }}
                     onBlur={() => setPhoneTouched(true)}
+                    placeholder="Enter phone number"
                   />
 
                   {phoneTouched && !phone.trim() && (
@@ -226,14 +239,7 @@ export default function Home() {
                       Please enter your phone number.
                     </p>
                   )}
-
-                  {phoneTouched &&
-                    phone.trim() &&
-                    !/^\d+$/.test(phone) && (
-                      <p className="error-message">
-                        Phone number can only contain numbers.
-                      </p>
-                    )}
+                  
                 </div>
 
                 <div className="field">
@@ -244,9 +250,6 @@ export default function Home() {
                     value={company}
                     onChange={(e) => setCompany(e.target.value)}
                   />
-                  {formError && (
-                    <p className="error-message">{formError}</p>
-                  )}
                 </div>
               </>
             )}
@@ -293,13 +296,18 @@ export default function Home() {
                   <label>Project Description</label>
 
                   <textarea
-                    placeholder="Tell us about your project..."
                     value={description}
+                    maxLength={1500}
                     onChange={(e) => {
                       setDescription(e.target.value);
                       setDescriptionError("");
                     }}
+                    placeholder="Tell us about your project, goals, features, and anything else that would help us understand what you need."
                   />
+
+                  <p className="character-count">
+                    {description.length} / 1500
+                  </p>
                   {descriptionError && (
                     <p className="error-message">
                       {descriptionError}
@@ -515,7 +523,7 @@ export default function Home() {
         )}
 
         <div className="form-navigation">
-          {currentStep > 1 && (
+          {currentStep > 1 && !submitted && (
             <button
               type="button"
               className="back-button"
