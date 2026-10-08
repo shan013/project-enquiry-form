@@ -125,6 +125,7 @@ button:hover {
   background: #faf8f3;
   color: #413c33;
   border: 1px solid #d8d0c0;
+  font-weight: 400;
 }
 
 .project-options button:hover {
