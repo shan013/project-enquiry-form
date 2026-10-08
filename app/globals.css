@@ -125,7 +125,7 @@ button:hover {
   background: #faf8f3;
   color: #413c33;
   border: 1px solid #d8d0c0;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .project-options button:hover {
@@ -205,7 +205,7 @@ button:hover {
 .review-item strong {
   color: #33312b;
   text-align: right;
-  font-weight: 600;
+  font-weight: 500;
   word-break: break-word;
 }
 
